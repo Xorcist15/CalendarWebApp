@@ -25,4 +25,4 @@ Application (features)
     11. a line tracker to track day, time depending on display type
     12. mouse selection (15 minutes jumps in selection)
     13. classes web components
-
+    15. hide side menu icon animation

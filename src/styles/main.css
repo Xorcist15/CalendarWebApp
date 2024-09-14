@@ -1,0 +1,47 @@
+:root {
+  --root-font-size: 10px;
+
+  /*top bar root variables */
+  --nav-bar-top-height: 60px;
+  --nav-bar-top-width: 100vw;
+
+  /*Left bar root variables */
+  --nav-bar-left-height: calc(100vh - var(--nav-bar-top-height));
+  --nav-bar-left-width: 15vw;
+
+  /*Main section (planning-calendar) root variables */
+  --planning-calendar-height: calc(100vh - var(--nav-bar-top-height));
+  --planning-calendar-width: calc(100vw - var(--nav-bar-left-width));
+}
+
+html {
+  font-size: var(--root-font-size);
+  box-sizing: ;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#nav-bar-top {
+  border: solid green;
+  height: var(--nav-bar-top-height);
+  width: var(--nav-bar-top-width);
+  font-size: 3rem;
+}
+
+#nav-bar-left {
+  border: solid blue;
+  height: var(--nav-bar-left-height);
+  width: var(--nav-bar-left-width);
+  display: inline-block;
+  font-size: 3rem;
+}
+
+#planning-calendar {
+  border: solid purple;
+  display: inline-block;
+  height: var(--planning-calendar-height);
+  width: var(--planning-calendar-width);
+}

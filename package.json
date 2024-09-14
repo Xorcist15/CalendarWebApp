@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "AP1 Creation d'une application Web de Calendrier",
   "main": "index.js",
+  "type":"module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

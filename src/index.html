@@ -6,35 +6,76 @@
   <meta name="viewport" content="width=device-scale, initial-scale=1.0">
   <title>Calendar App</title>
   <link rel="stylesheet" href="./styles/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script defer src="components/WeekCalendar.js"> </script>
 </head>
 
 <body>
-  <nav id="nav-bar-top">
-    This is the nav bar
-    <div class="nav-bar-element" id="icon-burger"></div>
-    <div class="nav-bar-element" id="logo"></div>
-    <div class="nav-bar-element" id="button-today"></div>
-    <div class="nav-bar-element" id="button-previous"></div>
-    <div class="nav-bar-element" id="button-next"></div>
-    <div class="nav-bar-element" id="date-current"></div>
-    <div class="nav-bar-element" id="date-week-number"></div>
-    <div class="nav-bar-element" id="icon-search"></div>
-    <div class="nav-bar-element" id="icon-help"></div>
-    <div class="nav-bar-element" id="icon-configuration"></div>
-    <div class="nav-bar-element" id="dropdown-display-menu"></div>
-  </nav>
+  <header>
+    <nav id="nav-bar-top">
+      <!-- part one of nav bar  -->
+      <div class="nav-bar-element" id="nav-bar-part-one">
+        <div class="nav-bar-element" id="icon-burger">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-bar-element" id="logo">
+          <!-- INSERT LOGO HERE -->
+          <!-- INSERT APP NAME HERE -->
+          <div>CalendarYS</div>
+        </div>
+        <div class="nav-bar-element" id="button-today">
+          <button type="button">Today</button>
+        </div>
+        <div class="nav-bar-element" id="button-previous">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <div class="nav-bar-element" id="button-next">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+        <div class="nav-bar-element" id="date-current">
+          11 September
+        </div>
+        <div class="nav-bar-element" id="date-week-number">
+          <span>Week xx</span>
+        </div>
+      </div>
 
-  <article id="nav-bar-left">
-    <div id="button-create"></div>
-    <div id="display-month"></div>
-    this is the left bar
-  </article>
+      <div class="nav-bar-element" id="nav-bar-part-one">
+        <!-- part two of nav bar  -->
+        <div class="nav-bar-element" id="icon-search">
+          <i class="fas fa-search"></i> <!-- Search Icon -->
+        </div>
+        <div class="nav-bar-element" id="icon-help">
+          <i class="fas fa-question-circle"></i> <!-- Help Icon -->
+        </div>
+        <div class="nav-bar-element" id="icon-settings">
+          <i class="fas fa-cog"></i> <!-- Settings Icon -->
+        </div>
+        <div class="nav-bar-element" id="dropdown-display-menu">
+          <select>
+            <option value="">Day</option>
+            <option value="">Week</option>
+            <option value="">Month</option>
+            <option value="">Year</option>
+          </select>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main id="main-container">
+    <aside id="nav-bar-left">
+      Barre de gauche
+      <div id="button-create"></div>
+      <div id="display-month"></div>
+    </aside>
 
-  <main id="planning-calendar">
-    this is the planning calender section
-    is the main section
+    <article id="planning-calendar">
+      <week-calendar></week-calendar>
+    </article>
   </main>
-
 </body>
 
-</html
+</html>

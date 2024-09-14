@@ -1,47 +1,78 @@
 :root {
   --root-font-size: 10px;
 
-  /*top bar root variables */
-  --nav-bar-top-height: 60px;
+  /* Top bar root variables */
+  --nav-bar-top-height: 70px;
   --nav-bar-top-width: 100vw;
 
-  /*Left bar root variables */
+  /* Left bar root variables */
   --nav-bar-left-height: calc(100vh - var(--nav-bar-top-height));
-  --nav-bar-left-width: 15vw;
+  --nav-bar-left-width: 300px;
 
-  /*Main section (planning-calendar) root variables */
+  /* Main section (planning-calendar) root variables */
   --planning-calendar-height: calc(100vh - var(--nav-bar-top-height));
   --planning-calendar-width: calc(100vw - var(--nav-bar-left-width));
+
+  /* General font size */
+  --general-font-size: 3rem;
 }
 
 html {
   font-size: var(--root-font-size);
-  box-sizing: ;
+  font-family: "Fira Code", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 #nav-bar-top {
-  border: solid green;
   height: var(--nav-bar-top-height);
   width: var(--nav-bar-top-width);
-  font-size: 3rem;
+  font-size: var(--general-font-size);
+  margin: 0;
+  background-color: blue;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-bar-element {
+  display: inline-block;
+}
+
+#main-container {
+  display: flex;
 }
 
 #nav-bar-left {
-  border: solid blue;
   height: var(--nav-bar-left-height);
   width: var(--nav-bar-left-width);
   display: inline-block;
-  font-size: 3rem;
+  font-size: var(--general-font-size);
+  background-color: green;
 }
 
 #planning-calendar {
-  border: solid purple;
   display: inline-block;
   height: var(--planning-calendar-height);
   width: var(--planning-calendar-width);
+  font-size: var(--general-font-size);
+  background-color: red;
+}
+
+#planning-calendar {
+  height: var(--planning-calendar-height);
+  width: var(--planning-calendar-width);
+  font-size: 3rem;
+  background-color: red;
+  display: flex;
+  /* Use flexbox if needed for alignment */
+  align-items: center;
+  /* Center the component vertically if needed */
+  justify-content: center;
+  /* Center the component horizontally if needed */
 }

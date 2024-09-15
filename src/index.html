@@ -10,7 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script defer src="components/WeekCalendar.js"> </script>
+  <script defer src="components/WeekDisplay.js"> </script>
+  <script defer src="components/DayDisplay.js"> </script>
+  <script defer src="components/MonthDisplay.js"> </script>
+  <script defer src="scripts/main.js"> </script>
 </head>
 
 <body>
@@ -18,53 +21,66 @@
     <nav id="nav-bar-top">
       <!-- part one of nav bar  -->
       <div class="nav-bar-element" id="nav-bar-part-one">
-        <div class="nav-bar-element" id="icon-burger">
+
+        <div class="nav-bar-element" id="button-bars">
           <i class="fas fa-bars"></i>
         </div>
+
         <div class="nav-bar-element" id="logo">
           <!-- INSERT LOGO HERE -->
           <!-- INSERT APP NAME HERE -->
           <div>CalendarYS</div>
         </div>
+
         <div class="nav-bar-element" id="button-today">
           <button type="button">Today</button>
         </div>
+
         <div class="nav-bar-element" id="button-previous">
           <i class="fas fa-arrow-left"></i>
         </div>
+
         <div class="nav-bar-element" id="button-next">
           <i class="fas fa-arrow-right"></i>
         </div>
+
         <div class="nav-bar-element" id="date-current">
           11 September
         </div>
+
         <div class="nav-bar-element" id="date-week-number">
           <span>Week xx</span>
         </div>
+
       </div>
 
       <div class="nav-bar-element" id="nav-bar-part-one">
         <!-- part two of nav bar  -->
-        <div class="nav-bar-element" id="icon-search">
+        <div class="nav-bar-element" id="button-search">
           <i class="fas fa-search"></i> <!-- Search Icon -->
         </div>
-        <div class="nav-bar-element" id="icon-help">
+
+        <div class="nav-bar-element" id="button-help">
           <i class="fas fa-question-circle"></i> <!-- Help Icon -->
         </div>
-        <div class="nav-bar-element" id="icon-settings">
+
+        <div class="nav-bar-element" id="button-settings">
           <i class="fas fa-cog"></i> <!-- Settings Icon -->
         </div>
+
         <div class="nav-bar-element" id="dropdown-display-menu">
-          <select>
-            <option value="">Day</option>
-            <option value="">Week</option>
-            <option value="">Month</option>
-            <option value="">Year</option>
+          <select id="display-selector" onchange="changeDisplay()">
+            <option value="1">Day</option>
+            <option value="2" selected>Week</option>
+            <option value="3">Month</option>
+            <option value="4">Year</option>
           </select>
         </div>
+
       </div>
     </nav>
   </header>
+
   <main id="main-container">
     <aside id="nav-bar-left">
       Barre de gauche
@@ -76,6 +92,7 @@
       <week-calendar></week-calendar>
     </article>
   </main>
+
 </body>
 
 </html>

@@ -14,19 +14,29 @@ function changeDisplay() {
   let display = '';
   switch (selectedValue) {
     case '1':
-      display = "<day-calendar></day-calendar>";
+      display = "day";
+      console.log('day display');
       break;
     case '2':
-      display = "<week-calendar></week-calendar>";
+      display = "week";
+      console.log('week display');
       break;
     case '3':
-      display = "<month-calendar></month-calendar>";
+      display = "month";
+      console.log('month display');
       break;
     case '4':
-      display = "<year-calendar></month-calendar>";
+      display = "year";
+      console.log('year display');
       break;
-    default:
-      console.log(selectedValue);
   }
-  planningCalendar.innerHTML = display;
+  planningCalendar.innerHTML = `<${display}-calendar></${display}-calendar>`;
 }
+
+function loadDefaultCalendar() {
+  planningCalendar.innerHTML = "<year-calendar></year-calendar>";
+}
+
+loadDefaultCalendar();
+
+const template = document.createElement("template");

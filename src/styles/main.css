@@ -16,7 +16,8 @@
   /* General font size */
   --general-font-size: 3rem;
 
-  --month-width: 500px;
+  --month-display-width: calc(100vw - var(--nav-bar-left-width));
+  --month-display-height: calc(100vh - var(--nav-bar-top-height));
 }
 
 html {

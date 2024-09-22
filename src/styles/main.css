@@ -56,9 +56,7 @@ body {
   width: var(--nav-bar-left-width);
   display: inline-block;
   font-size: var(--general-font-size);
-  background-color: green;
 }
-
 
 #planning-calendar {
   height: var(--planning-calendar-height);
@@ -67,4 +65,31 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#button-create {
+  margin: 30px;
+  margin-top: 50px;
+  border-radius: 50px;
+  height: 60px;
+  width: 200px;
+  box-shadow: 1px 1px 10px 1px Black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#create-icon,
+#create-text {
+  font-size: 20px;
+  display: inline;
+}
+
+#create-icon {
+  height: 20px;
+  width: 20px;
+}
+
+#create-text {
+  height: 50px;
 }

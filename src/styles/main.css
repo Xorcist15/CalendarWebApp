@@ -1,3 +1,4 @@
+/* Root Variables */
 :root {
   --root-font-size: 10px;
 
@@ -5,91 +6,99 @@
   --nav-bar-top-height: 70px;
   --nav-bar-top-width: 100vw;
 
-  /* Left bar root variables */
-  --nav-bar-left-height: calc(100vh - var(--nav-bar-top-height));
-  --nav-bar-left-width: 300px;
-
   /* Main section (planning-calendar) root variables */
   --planning-calendar-height: calc(100vh - var(--nav-bar-top-height));
-  --planning-calendar-width: calc(100vw - var(--nav-bar-left-width));
+  --planning-calendar-width: calc(100vw);
 
   /* General font size */
   --general-font-size: 3rem;
 
-  --month-display-width: calc(100vw - var(--nav-bar-left-width));
-  --month-display-height: calc(100vh - var(--nav-bar-top-height));
+  /* Colors and Shadows */
+  --primary-color: #007bff;
+  --primary-color-dark: #0056b3;
+  --text-color-light: #fff;
+  --box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
 }
 
-html {
-  font-size: var(--root-font-size);
-  font-family: "Fira Code", monospace;
-  font-optical-sizing: auto;
-  font-style: normal;
-}
-
+/* General Styles */
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+  font-size: var(--root-font-size);
   overflow: hidden;
 }
 
-#nav-bar-top {
-  height: var(--nav-bar-top-height);
-  width: var(--nav-bar-top-width);
-  font-size: var(--general-font-size);
-  margin: 0;
-  background-color: blue;
-  display: flex;
-  justify-content: space-between;
-}
-
-.nav-bar-element {
-  display: inline-block;
-}
-
+/* Main Container */
 #main-container {
   display: flex;
+  /* Use flexbox to align children */
+  height: 100vh;
+  /* Full height of the viewport */
 }
 
-#nav-bar-left {
-  height: var(--nav-bar-left-height);
-  width: var(--nav-bar-left-width);
-  display: inline-block;
-  font-size: var(--general-font-size);
-}
-
+/* Planning Calendar Styles */
 #planning-calendar {
   height: var(--planning-calendar-height);
   width: var(--planning-calendar-width);
-  font-size: 3rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #fff;
+  padding: 20px;
+  overflow-y: auto;
 }
 
+/* Button Create Styles */
 #button-create {
   margin: 30px;
   margin-top: 50px;
   border-radius: 50px;
   height: 60px;
   width: 200px;
-  box-shadow: 1px 1px 10px 1px Black;
+  box-shadow: var(--box-shadow);
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-#create-icon,
-#create-text {
-  font-size: 20px;
-  display: inline;
+#button-create:hover {
+  background-color: var(--primary-color-dark);
+}
+
+.button-create-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 #create-icon {
-  height: 20px;
-  width: 20px;
+  font-size: 1.25rem;
+  /* Slightly larger for better visibility */
 }
 
 #create-text {
-  height: 50px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Display Month Styles */
+#display-month {
+  width: 100%;
+  /* Adjusted to fit within the main container */
+  height: auto;
+  /* Let it determine its own height */
+  background-color: #e9ecef;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }

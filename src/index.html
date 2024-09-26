@@ -4,102 +4,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-scale, initial-scale=1.0">
-  <title>Calendar App</title>
 
+  <!-- link style sheets -->
   <link rel="stylesheet" href="./styles/main.css" />
   <link rel="stylesheet" href="./styles/sino.css" />
+  <link rel="stylesheet" href="./styles/navbar-styles.css" />
 
+  <!-- link font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+    rel="stylesheet">
 
+  <!-- link icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+  <!-- defer scripts to load html first -->
   <script defer src="scripts/main.js"> </script>
-  <script defer src="components/WeekDisplay.js"> </script>
-  <script defer src="components/DayDisplay.js"> </script>
-  <script defer src="components/MonthDisplay.js"> </script>
-  <script defer src="components/YearDisplay.js"> </script>
+  <!-- <script defer src="components/DayDisplay.js"> </script> -->
+  <script defer src="components/DayDisplayV2.js"> </script>
+  <!-- <script defer src="components/WeekDisplay.js"> </script> -->
+  <script defer src="components/WeekDisplayV2.js"> </script>
+  <!-- <script defer src="components/MonthDisplay.js"> </script> -->
+  <script defer src="components/MonthDisplayV2.js"> </script>
+  <!-- <script defer src="components/YearDisplay.js"> </script> -->
+  <script defer src="components/YearDisplayV2.js"> </script>
+
+  <title>Calendar App</title>
 </head>
 
 <body>
-  <header>
-    <nav id="nav-bar-top">
-      <!-- part one of nav bar  -->
-      <div class="nav-bar-element" id="nav-bar-part-one">
+  <nav id="nav-bar-top">
+    <div class="nav-bar-element" id="nav-bar-part-one">
 
-        <div class="nav-bar-element" id="button-bars">
-          <i class="fas fa-bars"></i>
-        </div>
-
-        <div class="nav-bar-element" id="logo">
-          <!-- INSERT LOGO HERE -->
-          <!-- INSERT APP NAME HERE -->
-          <div>CalendarYS</div>
-        </div>
-
-        <div class="nav-bar-element" id="button-today">
-          <button type="button">Today</button>
-        </div>
-
-        <div class="nav-bar-element" id="button-previous">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-
-        <div class="nav-bar-element" id="button-next">
-          <i class="fas fa-arrow-right"></i>
-        </div>
-
-        <div class="nav-bar-element" id="date-current">
-          11 September
-        </div>
-
-        <div class="nav-bar-element" id="date-week-number">
-          <span>Week xx</span>
-        </div>
-
+      <div class="nav-bar-element" id="button-bars">
+        <i class="fas fa-bars"></i>
       </div>
 
-      <div class="nav-bar-element" id="nav-bar-part-one">
-        <!-- part two of nav bar  -->
-        <div class="nav-bar-element" id="button-search">
-          <i class="fas fa-search"></i> <!-- Search Icon -->
-        </div>
-
-        <div class="nav-bar-element" id="button-help">
-          <i class="fas fa-question-circle"></i> <!-- Help Icon -->
-        </div>
-
-        <div class="nav-bar-element" id="button-settings">
-          <i class="fas fa-cog"></i> <!-- Settings Icon -->
-        </div>
-
-        <div class="nav-bar-element" id="dropdown-display-menu">
-          <select id="display-selector" onchange="changeDisplay()">
-            <option value="1">Day</option>
-            <option value="2" selected>Week</option>
-            <option value="3">Month</option>
-            <option value="4">Year</option>
-          </select>
-        </div>
-
+      <div class="nav-bar-element" id="logo">
+        <!-- INSERT LOGO HERE -->
+        <!-- INSERT APP NAME HERE -->
+        <div>CalendarYS</div>
       </div>
-    </nav>
-  </header>
+
+      <div class="nav-bar-element" id="button-today">
+        <button type="button">Today</button>
+      </div>
+
+      <div class="nav-bar-element" id="button-previous">
+        <i class="fas fa-arrow-left"></i>
+      </div>
+
+      <div class="nav-bar-element" id="button-next">
+        <i class="fas fa-arrow-right"></i>
+      </div>
+
+      <div class="nav-bar-element" id="date-current">
+        11 September
+      </div>
+
+      <div class="nav-bar-element" id="date-week-number">
+        <span>Week xx</span>
+      </div>
+
+    </div>
+
+    <!-- part two of nav bar -->
+    <div class="nav-bar-element" id="nav-bar-part-two">
+
+      <div class="nav-bar-element" id="button-search">
+        <i class="fas fa-search"></i> <!-- Search Icon -->
+      </div>
+
+      <div class="nav-bar-element" id="button-help">
+        <i class="fas fa-question-circle"></i> <!-- Help Icon -->
+      </div>
+
+      <div class="nav-bar-element" id="button-settings">
+        <i class="fas fa-cog"></i> <!-- Settings Icon -->
+      </div>
+
+      <div class="nav-bar-element" id="dropdown-display-menu">
+        <select id="display-selector" onchange="changeDisplay()">
+          <option value="1">Day</option>
+          <option value="2" selected>Week</option>
+          <option value="3">Month</option>
+          <option value="4">Year</option>
+        </select>
+      </div>
+
+    </div>
+  </nav>
 
   <main id="main-container">
     <aside id="nav-bar-left">
-
       <div id="button-create">
         <div class="button-create-content">
           <i id="create-icon" class="fas fa-plus"></i>
           <p id="create-text">Create</p>
         </div>
       </div>
-
       <div id="display-month"></div>
     </aside>
-
     <article id="planning-calendar">
       <!-- displays appear here -->
       <year-calendar></year-calendar>

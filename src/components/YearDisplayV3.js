@@ -1,60 +1,79 @@
-const templateY = document.createElement("template");
-templateY.innerHTML = `
+const templateY = document.createElement("template"); templateY.innerHTML = `
 <style>
   :host { 
     display: block;
     width: 100%;
     height: 100%;
-    font-size: 20px;
+    font-size: 16px;
   }
   .year-container {
-    height: calc(100% - 50px);
-    width: calc(100% - 50px);
-    padding: 30px;
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    padding: 10px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 40px;
-    border: red solid;
+    gap: 20px;
+    border-radius: 10px;
+    background-color: #ecf0f1;
   }
   .month-container {
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
   }
   .month-header {
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     text-align: center;
-  }
-  .day-header-container {
-    background-color: grey;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-evenly;
+    font-size: 14px;
+    background-color: #2980b9;
+    color: white;
     padding: 5px 0;
   }
- .day-header, .day {
+  .day-header-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    background-color: #bdc3c7;
+    padding: 5px 0;
+  }
+  .day-header, .day {
     display: flex;
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    height: 35px; /* Match the height for alignment */
-    width: 35px; /* Match the width for alignment */
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 20px;
     text-align: center;
     border-radius: 50%;
-    transition: background-color 0.2s ease;
-    padding: 0; /* Remove padding to reduce extra space */
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    font-size: 12px;
+    padding: 0;
+  }
+  .day-header {
+    font-weight: bold;
+    color: #2c3e50;
   }
   .day:hover {
-    background-color: #e0e0e0; /* Added hover effect */
+    background-color: #3498db;
+    color: white;
     cursor: pointer;
+    transform: scale(1.1);
   }
   .month-content {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 0px; /* Reduce the vertical gap between days */
-    margin-top: 0px;
+    gap: 0;
+    margin-top: 0;
+    padding: 5px;
   }
 </style>
+
+
+
 
 <div class="year-container"></div>
 `;
@@ -140,5 +159,4 @@ class YearDisplay extends HTMLElement {
 }
 
 customElements.define('year-calendar', YearDisplay);
-
 

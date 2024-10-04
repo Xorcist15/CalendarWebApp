@@ -1,5 +1,5 @@
-// const template = document.createElement('template');
-template.innerHTML = `
+const templateW = document.createElement('template');
+templateW.innerHTML = `
   <style>
     :host {
       display: block;
@@ -77,7 +77,7 @@ class WeekDisplay extends HTMLElement {
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: 'open' });
-    shadow.append(template.content.cloneNode(true));
+    shadow.append(templateW.content.cloneNode(true));
   }
 
   connectedCallback() {

@@ -5,17 +5,61 @@ const btnPrev = document.getElementById("button-previous");
 const btnNext = document.getElementById("button-next");
 const planningCalendar = document.getElementById("planning-calendar");
 
-// Initialize the DayDisplay component
-const dayDisplay = document.createElement('day-calendar');
+// Initialize the currentDate variable to today's date
+let currentDate = new Date();
 
-console.log("hello day display: ", dayDisplay);
+btnCurrentDay.addEventListener('click', goToToday);
+btnPrev.addEventListener('click', goToPreviousDay);
+btnNext.addEventListener('click', goToNextDay);
+
+function updateDayHeader(date) {
+  const dayDisplay = document.querySelector("day-calendar");
+  const dayHeader = dayDisplay.shadowRoot.querySelector(".day-header");
+
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = date.toLocaleDateString(undefined, options);
+  dayHeader.textContent = formattedDate;
+
+  console.log("set date : ", formattedDate);
+}
+
+function goToToday() {
+  currentDate = new Date(); // Reset the date to today
+  updateDayHeader(currentDate);
+}
+
+function goToPreviousDay() {
+  currentDate.setDate(currentDate.getDate() - 1); // Go to the previous day
+  updateDayHeader(currentDate);
+}
+
+function goToNextDay() {
+  currentDate.setDate(currentDate.getDate() + 1); // Go to the next day
+  updateDayHeader(currentDate);
+}
+
+// Initialize the display to today's date on page load
+document.addEventListener('DOMContentLoaded', () => {
+  updateDayHeader(currentDate);
+});
+
+// Initialize the DayDisplay component
 
 // Add event listeners to the buttons
-btnCurrentDay.addEventListener('click', () => dayDisplay.goToToday());
-btnPrev.addEventListener('click', () => dayDisplay.goToPreviousDay());
-btnNext.addEventListener('click', () => dayDisplay.goToNextDay());
-
-console.log(btnCurrentDay); console.log(btnPrev); console.log(btnNext);
+// btnCurrentDay.addEventListener('click', () => {
+//   const dayDisplay = document.querySelector("day-calendar");
+//   const dayHeader = dayDisplay.shadowRoot.querySelector(".day-header");
+//   console.log(dayDisplay);
+//   console.log(dayHeader);
+//   const currentDate = new Date();
+//   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+//   const formattedDate = currentDate.toLocaleDateString(undefined, options);
+//   dayHeader.textContent = formattedDate;
+//   dayHeader.style.color = "purple";
+//   console.log(formattedDate);
+//
+//   console.log(currentDate);
+// });
 
 // Change display function
 function changeDisplay() {
@@ -52,4 +96,9 @@ function changeDisplay() {
 
 // Add event listener for dropdown
 dropdownDisplaySelector.addEventListener('change', changeDisplay);
+
+
+
+
+
 

@@ -5,7 +5,6 @@ class DayDisplay extends HTMLElement {
     this.shadowRoot.innerHTML = this.getTemplate();
     this.currentDate = new Date();
   }
-
   // Template method for better organization
   getTemplate() {
     return `

@@ -6,7 +6,6 @@ templateM.innerHTML = `
       width: 100%;
       display: block; 
     }
-
     .container {
       width: 100%;
       height: 100%;
@@ -14,20 +13,17 @@ templateM.innerHTML = `
       overflow: auto;
       flex-direction: column; 
     }
-
     .header-container {
       width: 100%;
       display: grid;
       grid-template-columns: repeat(7, 1fr);
     }
-
     .grid-header {
       background-color: #f0f0f0; /* Lighter background for header */
       padding: 10px;
       text-align: center;
       border-bottom: 2px solid #ccc; /* Distinct separation */
     }
-
     .calendar {
       display: grid;
       grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
@@ -36,7 +32,6 @@ templateM.innerHTML = `
       height: calc(100% - 50px); /* Adjusted to allow for header height */
       padding: 10px; /* Add padding to calendar */
     }
-
     .grid-item {
       background-color: #ffffff; /* White background for day items */
       border: 1px solid #ccc; /* Light border for distinction */
@@ -49,7 +44,6 @@ templateM.innerHTML = `
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for card effect */
       min-height: 60px; /* Minimum height for each day block */
     }
-
     .empty-cell {
       background-color: transparent; /* Make empty cells invisible */
     }

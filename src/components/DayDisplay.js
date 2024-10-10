@@ -4,7 +4,20 @@ class DayDisplay extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = this.getTemplate();
     this.currentDate = new Date();
+    this.isDragging = false;
+    this.startY = null;
+    this.taskElement = null;
   }
+
+  connectedCallback() {
+    this.renderCalendar();
+
+    const calendar = this.shadowRoot.querySelector('.calendar');
+    calendar.addEventListener('mousedown', this.handleMouseDown.bind(this));
+    calendar.addEventListener('mousemove', this.handleMouseMove.bind(this));
+    calendar.addEventListener('mouseup', this.handleMouseUp.bind(this));
+  }
+
   // Template method for better organization
   getTemplate() {
     return `
@@ -78,6 +91,13 @@ class DayDisplay extends HTMLElement {
           background-color: #e0e0ff;
           cursor: pointer;
         }
+
+        /* Default styling for task element */
+        .task {
+          position: absolute;
+          background-color: rgba(173, 216, 230, 0.8); /* Light blue color */
+          border: 1px solid #000;
+        }
       </style>
       <div class="container">
         <div class="calendar">
@@ -85,10 +105,6 @@ class DayDisplay extends HTMLElement {
         </div>
       </div>
     `;
-  }
-
-  connectedCallback() {
-    this.renderCalendar();
   }
 
   renderCalendar() {
@@ -124,18 +140,66 @@ class DayDisplay extends HTMLElement {
       const timeSlot = document.createElement('div');
       timeSlot.classList.add('time-slot');
       timeSlot.setAttribute('aria-label', `Time slot for ${hour}:00`);
-      timeSlot.addEventListener('click', () => this.handleSlotClick(hour));
       fragment.appendChild(timeSlot);
     }
     calendar.appendChild(fragment); // Append all at once
     console.log("Time slots rendered for:", this.currentDate); // Log current date
   }
 
-  // Placeholder method for handling time slot clicks
-  handleSlotClick(hour) {
-    console.log(`You clicked on the time slot for ${hour}:00`);
+  // Handle mouse down event to start dragging
+  handleMouseDown(e) {
+    if (e.target.classList.contains('time-slot')) {
+      this.isDragging = true;
+      const calendarTop = this.shadowRoot.querySelector('.calendar').getBoundingClientRect().top;
+      this.startY = e.clientY - calendarTop;
+
+      const hour = Math.floor(this.startY / 60);
+      const offsetY = this.startY % 60;
+
+      this.taskElement = document.createElement('div');
+      this.taskElement.classList.add('task');
+      this.taskElement.style.position = 'absolute'; // Ensure the task is absolutely positioned
+      this.taskElement.style.top = `${hour * 60 + offsetY}px`; // Correct position within the hour slot
+      this.taskElement.style.left = '60px'; // Position it in the event column
+      this.taskElement.style.width = 'calc(100% - 60px)';
+      this.taskElement.style.height = '60px';
+      this.shadowRoot.querySelector('.calendar').appendChild(this.taskElement);
+
+      e.preventDefault();
+    }
+  }
+
+
+  // Handle mouse move event to update the task element's height
+  handleMouseMove(e) {
+    if (this.isDragging && this.taskElement) {
+      const calendarTop = this.shadowRoot.querySelector('.calendar').getBoundingClientRect().top;
+      const currentY = e.clientY - calendarTop;
+      const newHeight = Math.max(60, currentY - this.startY); // Minimum height of 60px
+      this.taskElement.style.height = `${newHeight}px`;
+
+      e.preventDefault();
+    }
+  }
+
+
+  // Handle mouse up event to finish dragging
+  handleMouseUp(e) {
+    if (this.isDragging) {
+      this.isDragging = false;
+      const calendarTop = this.shadowRoot.querySelector('.calendar').getBoundingClientRect().top;
+      const endY = e.clientY - calendarTop;
+      const startHour = Math.floor(this.startY / 60);
+      const endHour = Math.ceil(endY / 60);
+      console.log(`Task created from ${startHour}:00 to ${endHour}:00`);
+
+      // Optionally, you can add additional logic to save the task or adjust its final position/height
+
+      e.preventDefault();
+    }
   }
 }
 
 // Define the custom element
 customElements.define('day-calendar', DayDisplay);
+

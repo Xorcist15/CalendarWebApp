@@ -7,6 +7,7 @@ class DayDisplay extends HTMLElement {
     this.isDragging = false;
     this.startY = null;
     this.taskElement = null;
+    this.dragThreshold = 5; // Threshold for detecting drag vs. click
   }
 
   connectedCallback() {
@@ -18,7 +19,6 @@ class DayDisplay extends HTMLElement {
     calendar.addEventListener('mouseup', this.handleMouseUp.bind(this));
   }
 
-  // Template method for better organization
   getTemplate() {
     return `
       <style>
@@ -146,55 +146,78 @@ class DayDisplay extends HTMLElement {
     console.log("Time slots rendered for:", this.currentDate); // Log current date
   }
 
-  // Handle mouse down event to start dragging
   handleMouseDown(e) {
     if (e.target.classList.contains('time-slot')) {
-      this.isDragging = true;
+      this.isDragging = false; // Initially, assume it's not a drag
+      this.startY = e.clientY;
+      this.initialY = this.startY; // Save the initial Y position
+
       const calendarTop = this.shadowRoot.querySelector('.calendar').getBoundingClientRect().top;
-      this.startY = e.clientY - calendarTop;
+      const quarterHourHeight = 15; // Height corresponding to a 15-minute interval
+      this.startY = Math.round((e.clientY - calendarTop) / quarterHourHeight) * quarterHourHeight;
 
-      const hour = Math.floor(this.startY / 60);
-      const offsetY = this.startY % 60;
-
+      // Create a task element but don't append it yet
       this.taskElement = document.createElement('div');
       this.taskElement.classList.add('task');
-      this.taskElement.style.position = 'absolute'; // Ensure the task is absolutely positioned
-      this.taskElement.style.top = `${hour * 60 + offsetY}px`; // Correct position within the hour slot
-      this.taskElement.style.left = '60px'; // Position it in the event column
+      this.taskElement.style.position = 'absolute';
+      this.taskElement.style.top = `${this.startY}px`;
+      this.taskElement.style.left = '60px';
       this.taskElement.style.width = 'calc(100% - 60px)';
-      this.taskElement.style.height = '60px';
-      this.shadowRoot.querySelector('.calendar').appendChild(this.taskElement);
+      this.taskElement.style.height = '15px'; // Initial height set to 15px
 
       e.preventDefault();
     }
   }
 
-
-  // Handle mouse move event to update the task element's height
   handleMouseMove(e) {
-    if (this.isDragging && this.taskElement) {
-      const calendarTop = this.shadowRoot.querySelector('.calendar').getBoundingClientRect().top;
-      const currentY = e.clientY - calendarTop;
-      const newHeight = Math.max(60, currentY - this.startY); // Minimum height of 60px
-      this.taskElement.style.height = `${newHeight}px`;
+    if (this.startY !== null) {
+      const distance = Math.abs(e.clientY - this.initialY);
+      if (distance > this.dragThreshold) {
+        if (!this.isDragging) {
+          this.isDragging = true;
+          // Append the task element to the calendar only when dragging starts
+          this.shadowRoot.querySelector('.calendar').appendChild(this.taskElement);
+        }
 
-      e.preventDefault();
+        const calendarTop = this.shadowRoot.querySelector('.calendar').getBoundingClientRect().top;
+        const currentY = e.clientY - calendarTop;
+        const newHeight = Math.max(15, currentY - this.startY); // Minimum height of 15px
+        const quarterHourHeight = 15; // Height corresponding to a 15-minute interval
+        const roundedHeight = Math.round(newHeight / quarterHourHeight) * quarterHourHeight;
+
+        this.taskElement.style.height = `${roundedHeight}px`;
+
+        e.preventDefault();
+      }
     }
   }
 
-
-  // Handle mouse up event to finish dragging
   handleMouseUp(e) {
-    if (this.isDragging) {
-      this.isDragging = false;
-      const calendarTop = this.shadowRoot.querySelector('.calendar').getBoundingClientRect().top;
-      const endY = e.clientY - calendarTop;
-      const startHour = Math.floor(this.startY / 60);
-      const endHour = Math.ceil(endY / 60);
-      console.log(`Task created from ${startHour}:00 to ${endHour}:00`);
+    if (this.startY !== null) {
+      if (this.isDragging) {
+        this.isDragging = false;
+        // Task creation finished, handle as a drag
+        console.log(`Task created from ${this.startY / 60}:00 to ${(this.startY + parseInt(this.taskElement.style.height)) / 60}:00`);
+      } else {
+        // Handle as a simple click, rounding to 30 minutes
+        const calendarTop = this.shadowRoot.querySelector('.calendar').getBoundingClientRect().top;
+        const clickY = e.clientY - calendarTop;
+        const halfHourHeight = 30;
+        const roundedY = Math.round(clickY / halfHourHeight) * halfHourHeight;
+        console.log(`Simple click rounded to nearest half hour at ${roundedY / 60}:00`);
 
-      // Optionally, you can add additional logic to save the task or adjust its final position/height
-
+        // Optional: Create a task element for the simple click
+        const taskElement = document.createElement('div');
+        taskElement.classList.add('task');
+        taskElement.style.position = 'absolute';
+        taskElement.style.top = `${roundedY}px`;
+        taskElement.style.left = '60px';
+        taskElement.style.width = 'calc(100% - 60px)';
+        taskElement.style.height = '30px'; // Height set to 30px for a simple click
+        this.shadowRoot.querySelector('.calendar').appendChild(taskElement);
+      }
+      // Reset startY to null
+      this.startY = null;
       e.preventDefault();
     }
   }
@@ -202,4 +225,3 @@ class DayDisplay extends HTMLElement {
 
 // Define the custom element
 customElements.define('day-calendar', DayDisplay);
-

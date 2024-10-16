@@ -21,16 +21,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- defer scripts to load html first -->
-  <script defer src="components/DayDisplay.js"> </script>
   <script defer src="scripts/main.js"> </script>
-  <!-- <script defer src="components/WeekDisplay.js"> </script> -->
-  <script defer src="components/WeekDisplayV2.js"> </script>
-  <!-- <script defer src="components/MonthDisplay.js"> </script> -->
-  <!-- <script defer src="components/MonthDisplayV2.js"> </script> -->
-  <script defer src="components/MonthDisplayV3.js"> </script>
-  <!-- <script defer src="components/YearDisplay.js"> </script> -->
-  <!-- <script defer src="components/YearDisplayV2.js"> </script> -->
-  <script defer src="components/YearDisplayV3.js"> </script>
+  <script defer src="components/WeekDisplay.js"> </script>
 
   <title>Calendar App</title>
 </head>
@@ -85,16 +77,6 @@
       <div class="nav-bar-element" id="button-settings">
         <i class="fas fa-cog"></i> <!-- Settings Icon -->
       </div>
-
-      <div class="nav-bar-element" id="dropdown-display-menu">
-        <select id="display-selector" onchange="changeDisplay()">
-          <option value="1">Day</option>
-          <option value="2">Week</option>
-          <option value="3">Month</option>
-          <option value="4">Year</option>
-        </select>
-      </div>
-
     </div>
   </nav>
 
@@ -109,7 +91,7 @@
     </aside>
     <article id="planning-calendar">
       <!-- displays appear here -->
-      <day-calendar></day-calendar>
+      <week-calendar></week-calendar>
     </article>
   </main>
 

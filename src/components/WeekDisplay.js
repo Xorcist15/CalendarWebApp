@@ -1,74 +1,77 @@
-template.innerHTML = `
+class WeekDisplay extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = this.getTemplate();
+    this.currentDate = new Date(); // Initialize the current date
+  }
+
+  getTemplate() {
+    return `
       <style>
         :host {
           display: block;
           width: 100%;
-          height: 100%; 
+          height: 100%;
           font-family: "Fira Code", monospace;
-          font-optical-sizing: auto;
-          font-style: normal;
           overflow: hidden;
         }
-
         .container {
           width: 100%;
           height: 100%;
           overflow: auto;
         }
-
         .calendar {
           display: grid;
           grid-template-columns: 50px repeat(7, 1fr);
-          grid-template-rows: 30px repeat(24, 1fr);
+          grid-template-rows: 50px repeat(24, 1fr);
           height: 100%;
           width: 100%;
-          border: 1px solid #ccc;
+          border: 1px solid #e0e0e0;
           position: relative;
+          background-color: #fafafa;
         }
-
         .day-header,
         .time-header {
           position: sticky;
-          background-color: #f0f0f0;
+          background-color: #ffffff;
           z-index: 1;
+          border-bottom: 1px solid #e0e0e0;
+          border-right: 1px solid #e0e0e0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
-
         .day-header {
-          top: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-bottom: 1px solid #ccc;
-          border-right: 1px solid #ccc;
-          font-size: 20px;
+          font-size: 16px;
+          font-weight: bold;
+          color: #333333;
+          height: 50px;
         }
-
         .time-header {
-          left: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-bottom: 1px solid #ccc;
-          border-right: 1px solid #ccc;
-          font-size: 14px;
+          font-size: 12px;
+          color: #666666;
+          height: 50px;
         }
-
         .time-slot {
           display: flex;
           align-items: center;
           justify-content: center;
-          border-bottom: 1px solid #ccc;
-          border-right: 1px solid #ccc;
+          border-bottom: 1px solid #e0e0e0;
+          border-right: 1px solid #e0e0e0;
           height: 40px;
+          cursor: pointer; /* Change cursor for interactive slots */
+          transition: background-color 0.3s;
         }
-
+        .time-slot:hover {
+          background-color: #f0f0f0;
+        }
         .time-slot.event {
-          background-color: #e0e0ff;
-          cursor: pointer;
+          background-color: #d0ebff;
         }
       </style>
       <div class="container">
-        <div class="calendar">
+        <div class="calendar" role="grid" aria-label="Weekly Calendar">
           <div class="time-header"></div>
           <div class="day-header">Mon</div>
           <div class="day-header">Tue</div>
@@ -79,25 +82,13 @@ template.innerHTML = `
           <div class="day-header">Sun</div>
         </div>
       </div>
-`;
-
-class WeekDisplay extends HTMLElement {
-  constructor() {
-    super();
-    // attaches a shadow DOM tree to the instance of the elemnt
-    // Shadow root is the root node of the shadow DOM
-    // Each class object has its own shadow root on creation 
-    // because we called the this.attachShadow function
-    // which allows encapsulation to happen
-    // when browser's HTML parser encounters the custom element
-    // it creates an instance of the element and calls the constructor
-    const shadow = this.attachShadow({ mode: 'open' });
-    shadow.append(template.content.cloneNode(true));
+    `;
   }
 
-  // called when the element is added to the document DOM
   connectedCallback() {
     this.renderTimeSlots();
+    this.addEventListeners();
+    this.updateDayHeaders(); // Update day headers on load
   }
 
   renderTimeSlots() {
@@ -111,9 +102,58 @@ class WeekDisplay extends HTMLElement {
       for (let day = 0; day < 7; day++) {
         const timeSlot = document.createElement('div');
         timeSlot.classList.add('time-slot');
+        timeSlot.setAttribute('data-hour', hour);
+        timeSlot.setAttribute('data-day', day);
         calendar.appendChild(timeSlot);
       }
     }
+  }
+
+  addEventListeners() {
+    const timeSlots = this.shadowRoot.querySelectorAll('.time-slot:not(.time-header)');
+    timeSlots.forEach(slot => {
+      slot.addEventListener('click', this.handleTimeSlotClick.bind(this));
+    });
+  }
+
+  handleTimeSlotClick(event) {
+    const hour = event.currentTarget.getAttribute('data-hour');
+    const day = event.currentTarget.getAttribute('data-day');
+    alert(`Time Slot Clicked: Day ${day}, Hour ${hour}`);
+  }
+
+  updateDayHeaders() {
+    const startOfWeek = this.getStartOfWeek(this.currentDate);
+    const dayHeaders = this.shadowRoot.querySelectorAll('.day-header');
+
+    dayHeaders.forEach((header, index) => {
+      const headerDay = header.textContent.split(' ')[0]; // Extract the day (Mon, Tue, etc.)
+      const dayDate = new Date(startOfWeek);
+      dayDate.setDate(startOfWeek.getDate() + (index));
+
+      header.textContent = `${headerDay} ${dayDate.getDate()}`;
+    });
+  }
+
+  getStartOfWeek(date) {
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is sunday
+    return new Date(date.setDate(diff));
+  }
+
+  goToToday() {
+    this.currentDate = new Date();
+    this.updateDayHeaders();
+  }
+
+  goToNextWeek() {
+    this.currentDate.setDate(this.currentDate.getDate() + 7);
+    this.updateDayHeaders();
+  }
+
+  goToPreviousWeek() {
+    this.currentDate.setDate(this.currentDate.getDate() - 7);
+    this.updateDayHeaders();
   }
 }
 
